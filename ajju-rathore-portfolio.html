@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajju Rathore — Travel DMC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #185FA5;
+      --accent-dark: #0C447C;
+      --green: #0F6E56;
+      --green-dark: #085041;
+      --gold: #BA7517;
+      --bg: #ffffff;
+      --bg2: #f5f5f3;
+      --bg3: #ededea;
+      --text: #1a1a1a;
+      --text2: #555;
+      --text3: #999;
+      --border: rgba(0,0,0,0.1);
+      --border2: rgba(0,0,0,0.18);
+      --radius: 10px;
+      --radius-lg: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg2);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text2); text-decoration: none;
+      padding-bottom: 3px; border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--text); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 55%, var(--green) 100%);
+      color: white; padding: 5rem 2rem 4rem; text-align: center;
+    }
+    .hero-avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: white;
+      margin: 0 auto 1.5rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 1rem; color: white;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.1;
+    }
+    .hero h1 span { opacity: 0.75; }
+    .hero p { font-size: 1rem; opacity: 0.85; max-width: 520px; margin: 0.75rem auto 1.5rem; line-height: 1.7; }
+    .hero-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 1.25rem; }
+    .hero-chip {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white; font-size: 12px; padding: 5px 14px; border-radius: 20px;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1px; background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat {
+      background: var(--bg); padding: 1.25rem 1rem; text-align: center;
+    }
+    .stat-num { font-size: 1.6rem; font-weight: 500; color: var(--accent); }
+    .stat-lbl { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
+
+    /* SECTIONS */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+    .sec-label {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 0.4rem; font-weight: 500;
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: var(--text);
+    }
+
+    /* DESTINATION CARDS */
+    .dest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+    .dest-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.25rem;
+      transition: border-color 0.2s, transform 0.15s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .dest-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .dest-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+    .dest-name { font-size: 15px; font-weight: 500; margin-bottom: 3px; }
+    .dest-sub { font-size: 12px; color: var(--text3); line-height: 1.5; }
+    .dest-tag {
+      display: inline-block; margin-top: 8px;
+      background: #E6F1FB; color: #0C447C;
+      font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 500;
+    }
+
+    /* PACKAGES */
+    .pkg-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .pkg-tab {
+      padding: 7px 18px; border-radius: 20px; font-size: 13px;
+      border: 1px solid var(--border2); background: var(--bg);
+      color: var(--text2); cursor: pointer; transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .pkg-tab:hover, .pkg-tab.active {
+      background: var(--accent); color: white; border-color: var(--accent);
+    }
+    .dur-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .dur-tab {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--text2); cursor: pointer; transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .dur-tab:hover, .dur-tab.active {
+      background: var(--green-dark); color: white; border-color: var(--green-dark);
+    }
+    .pkg-detail {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+    }
+    .pkg-field { grid-column: auto; }
+    .pkg-field.full { grid-column: 1 / -1; }
+    .pf-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 5px; }
+    .pf-val { font-size: 14px; color: var(--text); line-height: 1.6; }
+    .includes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1.5rem; }
+    .inc-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: var(--text2);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 10px 12px;
+    }
+    .inc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-top: 5px; flex-shrink: 0; }
+
+    /* HOTELS */
+    .hotel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .hotel-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem; text-align: center;
+    }
+    .hotel-stars { color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; letter-spacing: 3px; }
+    .hotel-name { font-size: 15px; font-weight: 500; margin-bottom: 5px; }
+    .hotel-desc { font-size: 12px; color: var(--text3); }
+
+    /* FLEET */
+    .fleet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .fleet-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0.85rem 1rem;
+    }
+    .fleet-type { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 3px; }
+    .fleet-name { font-size: 13px; font-weight: 500; color: var(--text); }
+
+    /* B2B BANNER */
+    .b2b-banner {
+      background: linear-gradient(90deg, var(--green-dark), var(--green));
+      color: white; border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
+    }
+    .b2b-banner h3 { font-size: 1rem; font-weight: 500; margin-bottom: 3px; }
+    .b2b-banner p { font-size: 13px; opacity: 0.8; }
+    .b2b-btn {
+      background: white; color: var(--green-dark);
+      border: none; padding: 10px 24px; border-radius: 20px;
+      font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* CONTACT */
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
+    }
+    .contact-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+    }
+    .contact-avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #E6F1FB; color: #0C447C;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .contact-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 3px; }
+    .contact-role { font-size: 13px; color: var(--text3); margin-bottom: 1.25rem; }
+    .contact-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; font-size: 13px; }
+    .cr-lbl { min-width: 80px; color: var(--text3); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding-top: 2px; }
+    .cr-val { color: var(--text); }
+    .contact-form { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; }
+    .contact-form h3 { font-size: 1rem; font-weight: 500; margin-bottom: 1.25rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border2);
+      border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+      font-size: 14px; color: var(--text); background: var(--bg);
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .submit-btn {
+      width: 100%; padding: 12px; background: var(--accent); color: white;
+      border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500;
+      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s;
+    }
+    .submit-btn:hover { background: var(--accent-dark); }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a1a; color: #aaa;
+      text-align: center; padding: 2rem;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: white; margin-bottom: 0.5rem; }
+    .footer-logo span { color: #378ADD; }
+    footer p { font-size: 12px; margin-top: 4px; }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 1rem; gap: 1rem; }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .hero h1 { font-size: 2rem; }
+      .hotel-grid { grid-template-columns: 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .pkg-detail { grid-template-columns: 1fr; }
+      .includes-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo">Ajju <span>Rathore</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#fleet">Fleet</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+</nav>
+
+<!-- HERO -->
+<section id="home" style="padding:0;border:none">
+  <div class="hero">
+    <div class="hero-avatar">AR</div>
+    <div class="hero-badge">B2B Travel Partner</div>
+    <h1>Ajju <span>Rathore</span></h1>
+    <p>Premium Destination Management Company — wholesale B2B packages across India's most stunning destinations. Own hotels. Own fleet. Best rates.</p>
+    <div class="hero-chips">
+      <span class="hero-chip">B2B Wholesale</span>
+      <span class="hero-chip">Own Hotels</span>
+      <span class="hero-chip">Own Fleet</span>
+      <span class="hero-chip">5 Destinations</span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Destinations</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Package Types</div></div>
+    <div class="stat"><div class="stat-num">3★–5★</div><div class="stat-lbl">Hotels</div></div>
+    <div class="stat"><div class="stat-num">12+</div><div class="stat-lbl">Vehicles</div></div>
+    <div class="stat"><div class="stat-num">B2B</div><div class="stat-lbl">Rates Only</div></div>
+  </div>
+
+  <div class="container">
+    <section>
+      <div class="sec-label">Where We Operate</div>
+      <div class="sec-title">Our Destinations</div>
+      <div class="dest-grid">
+        <a href="#packages" class="dest-card">
+          <div class="dest-icon">🏔️</div>
+          <div class="dest-name">Sikkim</div>
+          <div class="dest-sub">Gangtok · Nathula · Lachung · Pelling</div>
+          <span class="dest-tag">4N–8N</span>
+        </a>
+        <a href="#packages" class="dest-card">
+          <div class="dest-icon">🌿</div>
+          <div class="dest-name">Meghalaya</div>
+          <div class="dest-sub">Shillong · Cherrapunji · Dawki · Mawlynnong</div>
+          <span class="dest-tag">4N–8N</span>
+        </a>
+        <a href="#packages" class="dest-card">
+          <div class="dest-icon">🏰</div>
+          <div class="dest-name">Rajasthan</div>
+          <div class="dest-sub">Jaipur · Udaipur · Jodhpur · Jaisalmer</div>
+          <span class="dest-tag">4N–8N</span>
+        </a>
+        <a href="#packages" class="dest-card">
+          <div class="dest-icon">⛰️</div>
+          <div class="dest-name">Shimla</div>
+          <div class="dest-sub">Shimla · Manali · Kufri · Naldehra</div>
+          <span class="dest-tag">4N–8N</span>
+        </a>
+        <a href="#packages" class="dest-card">
+          <div class="dest-icon">❄️</div>
+          <div class="dest-name">Ladakh</div>
+          <div class="dest-sub">Leh · Pangong · Nubra · Tso Moriri</div>
+          <span class="dest-tag">4N–8N</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Accommodation</div>
+      <div class="sec-title">Hotel Categories</div>
+      <div class="hotel-grid">
+        <div class="hotel-card">
+          <div class="hotel-stars">★★★</div>
+          <div class="hotel-name">3 Star</div>
+          <div class="hotel-desc">Comfortable, budget-friendly stays for value-conscious travelers</div>
+        </div>
+        <div class="hotel-card">
+          <div class="hotel-stars">★★★★</div>
+          <div class="hotel-name">4 Star</div>
+          <div class="hotel-desc">Superior amenities and attentive service for a premium experience</div>
+        </div>
+        <div class="hotel-card">
+          <div class="hotel-stars">★★★★★</div>
+          <div class="hotel-name">5 Star</div>
+          <div class="hotel-desc">Luxury stays with world-class facilities and exclusive services</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages" style="padding:0;border:none;background:var(--bg2)">
+  <div class="container">
+    <section>
+      <div class="sec-label">B2B Wholesale</div>
+      <div class="sec-title">Tour Packages</div>
+
+      <div class="b2b-banner">
+        <div>
+          <h3>Exclusively for Travel Agents &amp; Tour Operators</h3>
+          <p>Competitive wholesale rates — hotels &amp; transport fully managed by us</p>
+        </div>
+        <a href="#contact" class="b2b-btn">Get B2B Rates</a>
+      </div>
+
+      <p style="font-size:13px;color:var(--text3);margin-bottom:1rem">Select destination and duration:</p>
+      <div class="pkg-tabs" id="destTabs">
+        <button class="pkg-tab active" data-dest="sikkim">Sikkim</button>
+        <button class="pkg-tab" data-dest="meghalaya">Meghalaya</button>
+        <button class="pkg-tab" data-dest="rajasthan">Rajasthan</button>
+        <button class="pkg-tab" data-dest="shimla">Shimla</button>
+        <button class="pkg-tab" data-dest="ladakh">Ladakh</button>
+      </div>
+      <div class="dur-tabs" id="durTabs">
+        <button class="dur-tab active" data-dur="0">4N / 5D</button>
+        <button class="dur-tab" data-dur="1">5N / 6D</button>
+        <button class="dur-tab" data-dur="2">6N / 7D</button>
+        <button class="dur-tab" data-dur="3">7N / 8D</button>
+        <button class="dur-tab" data-dur="4">8N / 9D</button>
+      </div>
+      <div class="pkg-detail" id="pkgDetail"></div>
+
+      <div style="margin-top:2rem">
+        <div class="sec-label" style="margin-bottom:0.75rem">All Packages Include</div>
+        <div class="includes-grid">
+          <div class="inc-item"><div class="inc-dot"></div>Hotel accommodation as per category</div>
+          <div class="inc-item"><div class="inc-dot"></div>All transfers &amp; sightseeing by our fleet</div>
+          <div class="inc-item"><div class="inc-dot"></div>Daily breakfast &amp; dinner (MAP basis)</div>
+          <div class="inc-item"><div class="inc-dot"></div>Experienced local driver</div>
+          <div class="inc-item"><div class="inc-dot"></div>All toll, parking &amp; driver charges</div>
+          <div class="inc-item"><div class="inc-dot"></div>B2B agent support &amp; trip coordination</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section id="fleet" style="padding:0;border:none">
+  <div class="container">
+    <section>
+      <div class="sec-label">Transport</div>
+      <div class="sec-title">Our Fleet</div>
+      <div class="fleet-grid">
+        <div class="fleet-card"><div class="fleet-type">Premium MUV</div><div class="fleet-name">Toyota Innova Crysta</div></div>
+        <div class="fleet-card"><div class="fleet-type">MUV</div><div class="fleet-name">Maruti Suzuki Ertiga</div></div>
+        <div class="fleet-card"><div class="fleet-type">MUV</div><div class="fleet-name">Kia Carens</div></div>
+        <div class="fleet-card"><div class="fleet-type">MUV</div><div class="fleet-name">Mahindra Marazzo</div></div>
+        <div class="fleet-card"><div class="fleet-type">Premium SUV</div><div class="fleet-name">Toyota Fortuner</div></div>
+        <div class="fleet-card"><div class="fleet-type">SUV</div><div class="fleet-name">Mahindra Scorpio</div></div>
+        <div class="fleet-card"><div class="fleet-type">Group Van</div><div class="fleet-name">Force Traveller</div></div>
+        <div class="fleet-card"><div class="fleet-type">Sedan</div><div class="fleet-name">Maruti Suzuki Dzire</div></div>
+        <div class="fleet-card"><div class="fleet-type">MUV</div><div class="fleet-name">Toyota Innova</div></div>
+        <div class="fleet-card"><div class="fleet-type">SUV</div><div class="fleet-name">Jeep</div></div>
+        <div class="fleet-card"><div class="fleet-type">Large Group</div><div class="fleet-name">Tempo Traveller</div></div>
+        <div class="fleet-card"><div class="fleet-type">Large Group</div><div class="fleet-name">Mini Bus / Coach</div></div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding:0;border:none;background:var(--bg2)">
+  <div class="container">
+    <section style="border:none">
+      <div class="sec-label">Get in Touch</div>
+      <div class="sec-title">Contact Us</div>
+      <div class="contact-wrap">
+        <div class="contact-card">
+          <div class="contact-avatar">AR</div>
+          <div class="contact-name">Ajju Rathore</div>
+          <div class="contact-role">Travel Agent &amp; DMC Specialist · Jaipur, Rajasthan</div>
+          <div class="contact-row"><span class="cr-lbl">Company</span><span class="cr-val">Ridhu Travel DMC</span></div>
+          <div class="contact-row"><span class="cr-lbl">Rates</span><span class="cr-val">B2B Wholesale Only</span></div>
+          <div class="contact-row"><span class="cr-lbl">Destinations</span><span class="cr-val">Sikkim · Meghalaya · Rajasthan · Shimla · Ladakh</span></div>
+          <div class="contact-row"><span class="cr-lbl">Hotels</span><span class="cr-val">3★ / 4★ / 5★ — Own Properties</span></div>
+          <div class="contact-row"><span class="cr-lbl">Transport</span><span class="cr-val">Own Managed Fleet</span></div>
+          <div class="contact-row"><span class="cr-lbl">Phone</span><span class="cr-val">+91 XXXXX XXXXX</span></div>
+          <div class="contact-row"><span class="cr-lbl">Email</span><span class="cr-val">info@riddhutravel.com</span></div>
+        </div>
+        <div class="contact-form">
+          <h3>B2B Inquiry Form</h3>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Aapka naam" />
+          </div>
+          <div class="form-group">
+            <label>Agency Name</label>
+            <input type="text" placeholder="Travel agency ka naam" />
+          </div>
+          <div class="form-group">
+            <label>Phone / WhatsApp</label>
+            <input type="tel" placeholder="+91 XXXXX XXXXX" />
+          </div>
+          <div class="form-group">
+            <label>Destination</label>
+            <select>
+              <option value="">Select destination</option>
+              <option>Sikkim</option>
+              <option>Meghalaya</option>
+              <option>Rajasthan</option>
+              <option>Shimla</option>
+              <option>Ladakh</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Package details, dates, pax count..."></textarea>
+          </div>
+          <button class="submit-btn">Send Inquiry</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Ajju <span>Rathore</span></div>
+  <p>Ridhu Travel DMC — B2B Wholesale Travel Packages</p>
+  <p style="margin-top:8px;font-size:11px;opacity:0.5">&copy; 2026 Ridhu Travel DMC · Jaipur, Rajasthan</p>
+</footer>
+
+<script>
+  const pkgData = {
+    sikkim:[
+      {nights:"4N / 5D",places:"Gangtok",sights:"MG Road, Rumtek Monastery, Tsomgo Lake, Banjhakri Falls",best:"Oct–Dec, Mar–May"},
+      {nights:"5N / 6D",places:"Gangtok + Pelling",sights:"Gangtok, Pelling, Ravangla, Buddha Park, Rimbi Waterfalls",best:"Oct–May"},
+      {nights:"6N / 7D",places:"North + South Sikkim",sights:"Lachung, Zero Point, Yumthang, Yuksom, Tashiding Monastery",best:"Mar–Jun"},
+      {nights:"7N / 8D",places:"Complete Sikkim",sights:"Nathula Pass, Gurudongmar Lake, Gangtok, Pelling, Ravangla",best:"Apr–Jun"},
+      {nights:"8N / 9D",places:"Grand Sikkim Circuit",sights:"North + East + West Sikkim, all major monasteries and passes",best:"Apr–Jun"},
+    ],
+    meghalaya:[
+      {nights:"4N / 5D",places:"Shillong",sights:"Umiam Lake, Ward's Lake, Don Bosco Museum, Police Bazaar",best:"Oct–May"},
+      {nights:"5N / 6D",places:"Shillong + Cherrapunji",sights:"Nohkalikai Falls, Mawsmai Cave, Seven Sisters Falls, Eco Park",best:"Oct–May"},
+      {nights:"6N / 7D",places:"Shillong + Mawlynnong + Dawki",sights:"Living Root Bridge, Asia's Cleanest Village, Dawki River, Shnongpdeng",best:"Oct–Apr"},
+      {nights:"7N / 8D",places:"Full Meghalaya Circuit",sights:"Jowai, Balphakram National Park, Shnongpdeng camping, Nongkhnum Island",best:"Oct–Apr"},
+      {nights:"8N / 9D",places:"Extended Meghalaya",sights:"Garo Hills, Nokrek, Tura — complete state circuit with hidden gems",best:"Oct–Mar"},
+    ],
+    rajasthan:[
+      {nights:"4N / 5D",places:"Jaipur",sights:"Amber Fort, Hawa Mahal, City Palace, Jantar Mantar, Nahargarh Fort",best:"Oct–Mar"},
+      {nights:"5N / 6D",places:"Jaipur + Jodhpur",sights:"Mehrangarh Fort, Blue City walk, Umaid Bhawan, Jaswant Thada",best:"Oct–Mar"},
+      {nights:"6N / 7D",places:"Jaipur + Jodhpur + Udaipur",sights:"Lake Pichola, City Palace Udaipur, Monsoon Palace, Vintage Car Museum",best:"Oct–Mar"},
+      {nights:"7N / 8D",places:"+ Jaisalmer",sights:"Desert safari, Sam Sand Dunes, Camel ride, Jaisalmer Fort, Patwon Ki Haveli",best:"Nov–Feb"},
+      {nights:"8N / 9D",places:"Grand Rajasthan Tour",sights:"All major cities + Pushkar, Ranthambore, Ajmer — complete royal circuit",best:"Oct–Mar"},
+    ],
+    shimla:[
+      {nights:"4N / 5D",places:"Shimla",sights:"Mall Road, Ridge, Kufri, Jakhu Temple, Scandal Point, Christ Church",best:"Apr–Jun, Dec–Feb"},
+      {nights:"5N / 6D",places:"Shimla + Kufri + Chail",sights:"Green Valley, Naldehra Golf Course, Chail Wildlife Sanctuary, Tattapani",best:"Apr–Jun"},
+      {nights:"6N / 7D",places:"Shimla + Manali",sights:"Solang Valley, Rohtang Pass (seasonal), Hadimba Temple, Old Manali",best:"Apr–Jun"},
+      {nights:"7N / 8D",places:"Extended HP Hills",sights:"Sangla Valley, Chitkul, Kinnaur, Kalpa village and apple orchards",best:"May–Jun"},
+      {nights:"8N / 9D",places:"Complete Himachal Package",sights:"Kasauli + Shimla + Manali + Spiti Valley highlights full circuit",best:"May–Sep"},
+    ],
+    ladakh:[
+      {nights:"4N / 5D",places:"Leh City",sights:"Shanti Stupa, Hemis Monastery, Magnetic Hill, Hall of Fame, Leh Palace",best:"Jun–Sep"},
+      {nights:"5N / 6D",places:"Leh + Pangong Lake",sights:"Chang La Pass, Pangong Tso blue lake, overnight lakeside camp",best:"Jun–Sep"},
+      {nights:"6N / 7D",places:"Leh + Pangong + Nubra",sights:"Khardung La world's high pass, Nubra Valley, Camel safari at Hunder",best:"Jun–Sep"},
+      {nights:"7N / 8D",places:"+ Tso Moriri Lake",sights:"Hanle, Tso Moriri Lake, Zanskar viewpoints, remote high altitude villages",best:"Jul–Sep"},
+      {nights:"8N / 9D",places:"Complete Ladakh Circuit",sights:"Zanskar Valley, all high altitude passes, full luxury expedition circuit",best:"Jun–Sep"},
+    ]
+  };
+
+  let curDest = 'sikkim', curDur = 0;
+
+  function renderPkg() {
+    const p = pkgData[curDest][curDur];
+    document.getElementById('pkgDetail').innerHTML = `
+      <div class="pkg-field"><div class="pf-label">Duration</div><div class="pf-val">${p.nights}</div></div>
+      <div class="pkg-field"><div class="pf-label">Best Time to Visit</div><div class="pf-val">${p.best}</div></div>
+      <div class="pkg-field full"><div class="pf-label">Places Covered</div><div class="pf-val">${p.places}</div></div>
+      <div class="pkg-field full"><div class="pf-label">Key Highlights &amp; Sightseeing</div><div class="pf-val">${p.sights}</div></div>
+    `;
+  }
+
+  document.getElementById('destTabs').addEventListener('click', function(e) {
+    if (!e.target.dataset.dest) return;
+    document.querySelectorAll('.pkg-tab').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    curDest = e.target.dataset.dest;
+    renderPkg();
+  });
+
+  document.getElementById('durTabs').addEventListener('click', function(e) {
+    if (e.target.dataset.dur === undefined) return;
+    document.querySelectorAll('.dur-tab').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    curDur = parseInt(e.target.dataset.dur);
+    renderPkg();
+  });
+
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  renderPkg();
+</script>
+</body>
+</html>
